@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "format": "prettier -w 'src/**/*.{ts,vue}'",
+    "lint": "eslint --fix 'src/**/*.{ts,vue}'",
+    "fix": "pnpm format && pnpm lint"
   },
   "dependencies": {
     "vue": "^3.2.47"
@@ -16,7 +19,9 @@
     "@vitejs/plugin-vue": "^4.1.0",
     "@vue/eslint-config-airbnb-with-typescript": "^7.0.0",
     "eslint": "^8.39.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-vue": "^9.11.0",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vue-tsc": "^1.4.2"
