@@ -15,7 +15,7 @@ const emits = defineEmits<Emits>();
     type="button"
     role="switch"
     :disabled="disabled"
-    :aria-pressed="props.modelValue"
+    :aria-checked="props.modelValue"
     :data-orenoui-state="props.modelValue ? 'on' : 'off'"
     @click="() => emits('update:modelValue', !props.modelValue)"
   >
