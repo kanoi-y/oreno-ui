@@ -7,5 +7,8 @@ module.exports = {
     '@vue/eslint-config-airbnb-with-typescript',
     'prettier',
   ],
-  ignorePatterns: ["**/*.js"],
+  ignorePatterns: ['**/*.js'],
+  rules: {
+    'vue/multi-word-component-names': off,
+  },
 };
