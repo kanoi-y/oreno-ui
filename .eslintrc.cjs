@@ -1,14 +1,9 @@
 require('@rushstack/eslint-patch/modern-module-resolution');
-
 module.exports = {
   root: true,
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/eslint-config-airbnb-with-typescript',
-    'prettier',
-  ],
+  extends: ['plugin:vue/vue3-essential', '@vue/eslint-config-airbnb-with-typescript', 'plugin:storybook/recommended', 'prettier'],
   ignorePatterns: ['**/*.js'],
   rules: {
-    'vue/multi-word-component-names': off,
-  },
+    'vue/multi-word-component-names': off
+  }
 };
