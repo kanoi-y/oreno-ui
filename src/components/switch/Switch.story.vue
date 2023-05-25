@@ -6,6 +6,9 @@ const enabled = ref(false);
 </script>
 <template>
   <Story title="Switch">
+    <template #controls>
+      <HstCheckbox v-model="enabled" title="enabled" />
+    </template>
     <Variant>
       <Switch
         v-model="enabled"
