@@ -33,6 +33,8 @@ onMounted(() => {
     :tabindex="isChecked ? 0 : -1"
     :data-orenoui-state="isChecked ? 'checked' : 'unchecked'"
     @click="() => updateSelectedValue(props.value)"
+    @keydown.enter="() => updateSelectedValue(props.value)"
+    @keydown.space="() => updateSelectedValue(props.value)"
   >
     <slot></slot>
   </div>
