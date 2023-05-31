@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Ref, computed, inject, onMounted, ref } from 'vue';
-//TODO: 矢印キーの押下でフォーカスも移動するように実装する
 
 type Props = {
   value: string;
@@ -12,14 +11,18 @@ const { selectedValue, updateSelectedValue } = inject('selectedValue') as {
   selectedValue: Ref<string>;
   updateSelectedValue: (value: string) => void;
 };
-const registerItem = inject('registerItem') as (value: string) => void;
 
-const radioRef = ref(null);
+const registerItem = inject('registerItem') as (value: {
+  value: string;
+  el: HTMLElement | null;
+}) => void;
+
+const radioRef = ref<HTMLElement | null>(null);
 
 const isChecked = computed(() => selectedValue.value === props.value);
 
 onMounted(() => {
-  registerItem(props.value);
+  registerItem({ value: props.value, el: radioRef.value });
 });
 </script>
 <template>

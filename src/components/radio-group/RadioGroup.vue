@@ -10,16 +10,23 @@ type Emits = {
   (e: 'update:modelValue', value: string): void;
 };
 
+type RadioItem = {
+  value: string;
+  el: HTMLElement | null;
+};
+
 const props = defineProps<Props>();
 
 const emits = defineEmits<Emits>();
 
 const selectedValue = ref(props.modelValue);
-const items = ref<string[]>([]);
-const currentIndex = computed(() => items.value.indexOf(selectedValue.value));
+const radioItems = ref<RadioItem[]>([]);
+const currentIndex = computed(() =>
+  radioItems.value.findIndex((item) => item.value === selectedValue.value)
+);
 
-const registerItem = (value: string) => {
-  items.value.push(value);
+const registerItem = (value: RadioItem) => {
+  radioItems.value.push(value);
 };
 
 const updateSelectedValue = (value: string) => {
@@ -28,18 +35,21 @@ const updateSelectedValue = (value: string) => {
 };
 
 const handleKeydown = (event: KeyboardEvent) => {
-  if (currentIndex.value === -1) return;
+  const index = currentIndex.value;
+  if (index === -1) return;
   if (
     event.key === 'Up' ||
     event.key === 'ArrowUp' ||
     event.key === 'Left' ||
     event.key === 'ArrowLeft'
   ) {
-    if (currentIndex.value > 0) {
-      updateSelectedValue(items.value[currentIndex.value - 1]);
+    if (index > 0) {
+      updateSelectedValue(radioItems.value[index - 1].value);
+      radioItems.value[index - 1].el?.focus();
       return;
     }
-    updateSelectedValue(items.value[items.value.length - 1]);
+    updateSelectedValue(radioItems.value[radioItems.value.length - 1].value);
+    radioItems.value[radioItems.value.length - 1].el?.focus();
   }
 
   if (
@@ -48,11 +58,13 @@ const handleKeydown = (event: KeyboardEvent) => {
     event.key === 'Right' ||
     event.key === 'ArrowRight'
   ) {
-    if (currentIndex.value < items.value.length - 1) {
-      updateSelectedValue(items.value[currentIndex.value + 1]);
+    if (index < radioItems.value.length - 1) {
+      updateSelectedValue(radioItems.value[index + 1].value);
+      radioItems.value[index + 1].el?.focus();
       return;
     }
-    updateSelectedValue(items.value[0]);
+    updateSelectedValue(radioItems.value[0].value);
+    radioItems.value[0].el?.focus();
   }
 };
 
