@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import RadioGroup from './RadioGroup.vue';
 import RadioGroupItem from './RadioGroupItem.vue';
 
-const cats = [
+const cats = ref([
   {
     id: '1',
     name: 'Tama',
@@ -16,12 +16,19 @@ const cats = [
     id: '3',
     name: 'Kuro',
   },
-];
+]);
 
 const selectedCat = ref('1');
 </script>
 <template>
   <Story title="RadioGroup">
+    <template #controls>
+      <HstSelect
+        v-model="selectedCat"
+        :options="[...cats.map((cat) => cat.id), '4']"
+        title="selectedValue"
+      />
+    </template>
     <Variant title="default">
       <RadioGroup v-model="selectedCat" class="flex flex-col gap-2">
         <RadioGroupItem
