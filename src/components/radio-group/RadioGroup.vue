@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, provide, ref } from 'vue';
+import { computed, onMounted, provide, ref, watch } from 'vue';
 
 // FIXME: vue3.3にupgradeした際に型をジェネリクスに修正する。
 type Props = {
@@ -68,20 +68,35 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 };
 
+const setZeroToTabIndex = (index: number) => {
+  if (index === -1 && radioItems.value.length > 0) {
+    radioItems.value.forEach((item) => {
+      if (!item.el) return;
+      item.el.tabIndex = -1;
+    });
+
+    if (!radioItems.value[0].el) return;
+    radioItems.value[0].el.tabIndex = 0;
+  }
+};
+
 provide('selectedValue', { selectedValue, updateSelectedValue });
 provide('registerItem', registerItem);
 
 onMounted(() => {
-  nextTick(() => {
-    if (
-      currentIndex.value === -1 &&
-      radioItems.value.length > 0 &&
-      !!radioItems.value[0].el
-    ) {
-      radioItems.value[0].el.tabIndex = 0;
-    }
-  });
+  setZeroToTabIndex(currentIndex.value);
 });
+
+watch(currentIndex, (newValue) => {
+  setZeroToTabIndex(newValue);
+});
+
+watch(
+  () => props.modelValue,
+  (newValue) => {
+    selectedValue.value = newValue;
+  }
+);
 </script>
 
 <template>
