@@ -7,22 +7,18 @@ type Props = {
 
 const props = defineProps<Props>();
 
-const { selectedTab, updateSelectedTab } = inject('selectedTab') as {
+const { selectedTab } = inject('selectedTab') as {
   selectedTab: Ref<string | undefined>;
-  updateSelectedTab: (value: string) => void;
 };
-
 const isSelected = computed(() => selectedTab.value === props.value);
 </script>
 <template>
-  <button
-    type="button"
-    role="tab"
-    :aria-selected="isSelected"
+  <div
+    role="tabpanel"
+    tabindex="0"
     :data-orenoui-state="isSelected ? 'active' : 'inactive'"
-    :tabindex="isSelected ? 0 : -1"
-    @click="() => updateSelectedTab(props.value)"
+    v-show="isSelected"
   >
     <slot></slot>
-  </button>
+  </div>
 </template>
